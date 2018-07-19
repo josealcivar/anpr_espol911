@@ -1,0 +1,196 @@
+{% extends 'base.html' %} {% block content %}
+<section class="invoice">
+  <!-- title row -->
+  <div class="row">
+    <div class="col-xs-12">
+      <h2 class="page-header">
+            <i class="fa fa-globe"></i> Espol911, Inc.
+            <small class="pull-right">Date: 2/10/2014</small>
+          </h2>
+    </div>
+    <!-- /.col -->
+  </div>
+  <!-- info row -->
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-2 col-xs-6">
+        <div class="box-body">
+          <!-- Date -->
+          <div class="form-group">
+            <label>Desde:</label>
+            <div class="input-group date">
+              <div class="input-group-addon">
+                <i class="fa fa-calendar"></i>
+              </div>
+              <input class="form-control pull-right" id="datepicker" type="date">
+            </div>
+            <!-- /.input group -->
+          </div>
+          <!-- Date -->
+          <div class="form-group">
+            <label>Hasta:</label>
+
+            <div class="input-group date">
+              <div class="input-group-addon">
+                <i class="fa fa-calendar"></i>
+              </div>
+              <input class="form-control pull-right" id="datepicker" type="date">
+            </div>
+            <!-- /.input group -->
+          </div>
+          <!-- /.form group -->
+        </div>
+
+
+        <!-- /.col -->
+
+      </div>
+      <div class="col-md-2 col-xs-6">
+        <div class="box-body">
+          <div>
+            <!-- Date and time range -->
+            <div class="form-group">
+              <label>Hora desde:</label>
+
+              <div class="input-group">
+                <div class="input-group-addon">
+                  <i class="fa fa-clock-o"></i>
+                </div>
+                <input class="form-control pull-right" id="reservationtime" type="time">
+              </div>
+              <!-- /.input group -->
+            </div>
+            <!-- /.form group -->
+            <!-- Date and time range -->
+            <div class="form-group">
+              <label>Hora Hasta:</label>
+
+              <div class="input-group">
+                <div class="input-group-addon">
+                  <i class="fa fa-clock-o"></i>
+                </div>
+                <input class="form-control pull-right" id="reservationtime" type="time">
+              </div>
+              <!-- /.input group -->
+            </div>
+            <!-- /.form group -->
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row invoice-info">
+      <div class="col-sm-3 xs-12 invoice-col">
+        <div class="form-group has-feedback">
+          <label for="InputPlates">PLaca:</label>
+          <input type="text" name="username" class="form-control" placeholder="placa">
+          <span class="glyphicon glyphicon-cars"></span>
+        </div>
+      </div>
+      <div class="col-sm-3 xs-12 invoice-col">
+        <div class="form-group has-feedback">
+          <label for="InputPlates">Marca:</label>
+          <input type="text" name="marca" class="form-control" placeholder="marca">
+          <span class="glyphicon glyphicon-cars"></span>
+        </div>
+      </div>
+      <div class="col-sm-3 xs-12 invoice-col">
+        <div class="form-group has-feedback">
+          <label class="control-label col-sm-2" for="InputModelo">Modelo:</label>
+          <input type="text" name="modelo" class="form-control" placeholder="modelo">
+          <span class="glyphicon glyphicon-cars"></span>
+        </div>
+      </div>
+      <div class="col-sm-3 xs-12 invoice-col">
+
+        <button type="button" class="btn btn-success pull-right" style="margin-right: 5px;">
+              <i class="fa fa-search"></i> Consultar
+            </button>
+
+
+        <!-- /.col -->
+      </div>
+      <!-- /.row -->
+    </div>
+
+  </div>
+  <div class="row">
+    <div class="col-xs-12 table-responsive">
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Propietario</th>
+            <th>Placa</th>
+            <th>Color</th>
+            <th>Fecha Registro</th>
+            <th>Hora Registro</th>
+            <th>Imagen</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">1</th>
+            <td>CARLOS PEREZ</td>
+            <td>GHI-4652</td>
+            <td>NEGRO</td>
+            <td>12-07-2018</td>
+            <td>07:25:00</td>
+            <td><a type="button" class="btn btn-warning" href="#"><i class="glyphicon glyphicon-pencil"></i></a>
+
+          </tr>
+          <tr>
+            <th scope="row">1</th>
+            <td>CARLOS PEREZ</td>
+            <td>PRI-5243</td>
+            <td>BLANCO</td>
+            <td>12-07-2018</td>
+            <td>07:25:00</td>
+            <td><a type="button" class="btn btn-warning" href="#"><i class="glyphicon glyphicon-pencil"></i></a>
+
+          </tr>
+          <tr>
+            <th scope="row">1</th>
+            <td>CARLOS PEREZ</td>
+            <td>MUI-6545</td>
+            <td>VERDE</td>
+            <td>12-07-2018</td>
+            <td>07:25:00</td>
+            <td><a type="button" class="btn btn-warning" href="#"><i class="glyphicon glyphicon-pencil"></i></a>
+
+          </tr>
+          <tr>
+            <th scope="row">1</th>
+            <td>CARLOS PEREZ</td>
+            <td>GHI-2343</td>
+            <td>GRIS</td>
+            <td>12-07-2018</td>
+            <td>07:25:00</td>
+            <td><a type="button" class="btn btn-warning" href="#"><i class="glyphicon glyphicon-pencil"></i></a>
+
+          </tr>
+          <tr>
+            <th scope="row">1</th>
+            <td>CARLOS PEREZ</td>
+            <td>MOF-4343</td>
+            <td>VEIGE</td>
+            <td>12-07-2018</td>
+            <td>07:25:00</td>
+            <td><a type="button" class="btn btn-warning" href="#"><i class="glyphicon glyphicon-pencil"></i></a>
+
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- this row will not appear when printing -->
+  <div class="row no-print">
+    <div class="col-xs-12">
+      <a href="invoice-print.html" target="_blank" class="btn btn-default"><i class="fa fa-print"></i> Print</a>
+      <button type="button" class="btn btn-primary pull-right" style="margin-right: 5px;">
+            <i class="fa fa-download"></i> Generate PDF
+          </button>
+    </div>
+  </div>
+</section>
+{% endblock %}
