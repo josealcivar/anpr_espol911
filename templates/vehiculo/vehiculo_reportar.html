@@ -1,0 +1,19 @@
+{% extends 'base.html' %} {% block content %}
+<section class="invoice">
+  <form method="get">
+    {% csrf_token %}
+    <h3>Desea Enviar a <strong> Lista Negra </strong> <br> <br> el Vehiculo de placa: <strong> {{ vehiculo.placa }}</strong> Marca: <strong> {{ vehiculo.marca }} </strong>  Modelo: <strong>{{ vehiculo.modelo }} </strong></h3>
+    <div class="row invoice-info">
+      <div class="col-sm-6 xs-12 invoice-col">
+        <div class="form-group has-feedback">
+          <label for="InputPlates">Comentario:</label>
+          <input type="textarea" name="comentario" class="form-control" placeholder="comentario">
+          <span class="glyphicon glyphicon-cars"></span>
+        </div>
+      </div>
+    </div>
+    <button class="btn btn-danger" type="submit">Si, Reportar</button>
+    <a class="btn btn-default" href="{% url 'consultar' %}">regresar</a>
+  </form>
+</section>
+{% endblock %}

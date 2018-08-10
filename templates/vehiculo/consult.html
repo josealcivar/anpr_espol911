@@ -1,185 +1,147 @@
-{% extends 'base.html' %} {% block content %}
+{% extends 'base.html' %} {% load static %} {% block content %}
 <section class="invoice">
   <!-- title row -->
   <div class="row">
     <div class="col-xs-12">
       <h2 class="page-header">
             <i class="fa fa-globe"></i> Espol911, Inc.
-            <small class="pull-right">Date: 2/10/2014</small>
+            <small class="pull-right">Fecha: <strong>{{ fecha_actual }} </strong></small>
           </h2>
     </div>
     <!-- /.col -->
   </div>
-  <!-- info row -->
-  <div class="container-fluid">
-    <div class="row">
-      <div class="col-md-2 col-xs-6">
-        <div class="box-body">
-          <!-- Date -->
-          <div class="form-group">
-            <label>Desde:</label>
-            <div class="input-group date">
-              <div class="input-group-addon">
-                <i class="fa fa-calendar"></i>
-              </div>
-              <input class="form-control pull-right" id="datepicker" type="date">
-            </div>
-            <!-- /.input group -->
-          </div>
-          <!-- Date -->
-          <div class="form-group">
-            <label>Hasta:</label>
-
-            <div class="input-group date">
-              <div class="input-group-addon">
-                <i class="fa fa-calendar"></i>
-              </div>
-              <input class="form-control pull-right" id="datepicker" type="date">
-            </div>
-            <!-- /.input group -->
-          </div>
-          <!-- /.form group -->
-        </div>
-
-
-        <!-- /.col -->
-
-      </div>
-      <div class="col-md-2 col-xs-6">
-        <div class="box-body">
-          <div>
-            <!-- Date and time range -->
+  <form id="searchDaraVehicle" method="GET">
+    <!-- info row -->
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-3 col-xs-6">
+          <div class="box-body">
+            <!-- Date -->
             <div class="form-group">
-              <label>Hora desde:</label>
-
-              <div class="input-group">
-                <div class="input-group-addon">
-                  <i class="fa fa-clock-o"></i>
-                </div>
-                <input class="form-control pull-right" id="reservationtime" type="time">
+              <label>Desde:</label>
+              <div class='input-group date' id='datetimepicker1'>
+                <span class="input-group-addon">
+                <i class="fa fa-calendar"></i>
+              </span>
+                <input class="form-control pull-right" type="text" name="datesince">
               </div>
               <!-- /.input group -->
             </div>
-            <!-- /.form group -->
-            <!-- Date and time range -->
+            <!-- Date -->
             <div class="form-group">
-              <label>Hora Hasta:</label>
+              <label>Hasta:</label>
 
-              <div class="input-group">
+              <div class='input-group date' id="datetimepicker2">
                 <div class="input-group-addon">
-                  <i class="fa fa-clock-o"></i>
+                  <i class="fa fa-calendar"></i>
                 </div>
-                <input class="form-control pull-right" id="reservationtime" type="time">
+                <input class="form-control pull-right" type="text" name="datefrom">
               </div>
               <!-- /.input group -->
             </div>
             <!-- /.form group -->
           </div>
-        </div>
-      </div>
-    </div>
-    <div class="row invoice-info">
-      <div class="col-sm-3 xs-12 invoice-col">
-        <div class="form-group has-feedback">
-          <label for="InputPlates">PLaca:</label>
-          <input type="text" name="username" class="form-control" placeholder="placa">
-          <span class="glyphicon glyphicon-cars"></span>
-        </div>
-      </div>
-      <div class="col-sm-3 xs-12 invoice-col">
-        <div class="form-group has-feedback">
-          <label for="InputPlates">Marca:</label>
-          <input type="text" name="marca" class="form-control" placeholder="marca">
-          <span class="glyphicon glyphicon-cars"></span>
-        </div>
-      </div>
-      <div class="col-sm-3 xs-12 invoice-col">
-        <div class="form-group has-feedback">
-          <label class="control-label col-sm-2" for="InputModelo">Modelo:</label>
-          <input type="text" name="modelo" class="form-control" placeholder="modelo">
-          <span class="glyphicon glyphicon-cars"></span>
-        </div>
-      </div>
-      <div class="col-sm-3 xs-12 invoice-col">
 
-        <button type="button" class="btn btn-success pull-right" style="margin-right: 5px;">
+
+          <!-- /.col -->
+
+        </div>
+
+      </div>
+      <div class="row invoice-info">
+        <div class="col-sm-6 xs-12 invoice-col">
+          <div class="form-group has-feedback">
+            <label for="InputPlates">Caracteristica:</label>
+            <input type="text" name="caracteristica" class="form-control" placeholder="placa, marca o modelo">
+            <span class="glyphicon glyphicon-cars"></span>
+          </div>
+        </div>
+        <!-- <div class="col-sm-3 xs-12 invoice-col">
+          <div class="form-group has-feedback">
+            <label for="InputPlates">Marca:</label>
+            <input type="text" name="marca" class="form-control" placeholder="marca">
+            <span class="glyphicon glyphicon-cars"></span>
+          </div>
+        </div>
+        <div class="col-sm-3 xs-12 invoice-col">
+          <div class="form-group has-feedback">
+            <label class="control-label col-sm-2" for="InputModelo">Modelo:</label>
+            <input type="text" name="modelo" class="form-control" placeholder="modelo">
+            <span class="glyphicon glyphicon-cars"></span>
+          </div>
+        </div> -->
+        <div class="col-sm-6 xs-12 invoice-col">
+
+          <button type="submit" id="search" class="btn btn-success pull-right" style="margin-right: 5px;">
               <i class="fa fa-search"></i> Consultar
             </button>
 
 
-        <!-- /.col -->
+          <!-- /.col -->
+        </div>
+        <!-- /.row -->
       </div>
-      <!-- /.row -->
-    </div>
 
-  </div>
+    </div>
+  </form>
+  <!-- <h2>{{ mensajes }}</h2> -->
+
   <div class="row">
     <div class="col-xs-12 table-responsive">
       <table class="table table-bordered">
         <thead>
           <tr>
             <th>#</th>
-            <th>Propietario</th>
             <th>Placa</th>
+            <th>Marca</th>
+            <th>Modelo</th>
             <th>Color</th>
+            <th>Servicio</th>
             <th>Fecha Registro</th>
             <th>Hora Registro</th>
+            <th>Camara</th>
             <th>Imagen</th>
+            <th>Denunciar</th>
           </tr>
         </thead>
         <tbody>
+          {% if busqueda %} {% for flujo in object_list %}
           <tr>
-            <th scope="row">1</th>
-            <td>CARLOS PEREZ</td>
-            <td>GHI-4652</td>
-            <td>NEGRO</td>
-            <td>12-07-2018</td>
-            <td>07:25:00</td>
-            <td><a type="button" class="btn btn-warning" href="#"><i class="glyphicon glyphicon-pencil"></i></a>
+            <th>{{ forloop.counter }}</th>
+            <td>{{ flujo.vehiculo.placa }}</td>
+            <td>{{ flujo.vehiculo.marca }}</td>
+            <td>{{ flujo.vehiculo.modelo }}</td>
+            <td>{{ flujo.vehiculo.color }}</td>
+            <td>{{ flujo.vehiculo.servicio }}</td>
+            <td>{{ flujo.fecha }}</td>
+            <td>{{ flujo.horacaptura }}</td>
+            <td>{{ flujo.camara }}</td>
+            <td>
+              <a class="btn btn-info" href="{% url 'reportar_vehiculo' flujo.vehiculo.id %}">Imagen</a>
+            </td>
+            <td>
+              <a class="btn btn-danger" href="{% url 'reportar_vehiculo' flujo.vehiculo.id %}">Reportar</a>
+            </td>
+
+            <!-- <td>{{ vehiculo.vehiculo.nombre }} {{vehiculo.vehiculo.apellido}}</td> -->
 
           </tr>
-          <tr>
-            <th scope="row">1</th>
-            <td>CARLOS PEREZ</td>
-            <td>PRI-5243</td>
-            <td>BLANCO</td>
-            <td>12-07-2018</td>
-            <td>07:25:00</td>
-            <td><a type="button" class="btn btn-warning" href="#"><i class="glyphicon glyphicon-pencil"></i></a>
-
-          </tr>
-          <tr>
-            <th scope="row">1</th>
-            <td>CARLOS PEREZ</td>
-            <td>MUI-6545</td>
-            <td>VERDE</td>
-            <td>12-07-2018</td>
-            <td>07:25:00</td>
-            <td><a type="button" class="btn btn-warning" href="#"><i class="glyphicon glyphicon-pencil"></i></a>
-
-          </tr>
-          <tr>
-            <th scope="row">1</th>
-            <td>CARLOS PEREZ</td>
-            <td>GHI-2343</td>
-            <td>GRIS</td>
-            <td>12-07-2018</td>
-            <td>07:25:00</td>
-            <td><a type="button" class="btn btn-warning" href="#"><i class="glyphicon glyphicon-pencil"></i></a>
-
-          </tr>
-          <tr>
-            <th scope="row">1</th>
-            <td>CARLOS PEREZ</td>
-            <td>MOF-4343</td>
-            <td>VEIGE</td>
-            <td>12-07-2018</td>
-            <td>07:25:00</td>
-            <td><a type="button" class="btn btn-warning" href="#"><i class="glyphicon glyphicon-pencil"></i></a>
-
-          </tr>
+          {% endfor %} {% else %}
+          <h1>no hay registros de Vehiculos</h1> {%endif%}
         </tbody>
       </table>
+
+      <ul class="pager">
+
+        <li>
+          {% if page_obj.has_previous %}
+          <a class="page-link" href="?page{{ page_obj.previous_page_number }}">Previous</a> {% endif %}</li>
+        <li>
+          {% if page_obj.has_next %}
+          <a class="page-link" href="?page{{page_obj.next_page_number}}">Next</a> {% endif %}</li>
+
+      </ul>
+
     </div>
   </div>
 
@@ -193,4 +155,28 @@
     </div>
   </div>
 </section>
-{% endblock %}
+{% block javascript %} {% include 'adminlte/lib/_scripts.html' %}
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.13.0/moment.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js">
+</script>
+<script type="text/javascript">
+  $('#search').click(function() {
+    let valor = $('#timesince').val();
+    console.log(valor);
+    //alert(valor);
+  });
+</script>
+<script type="text/javascript">
+  // HH:mm
+  $(function() {
+    $('#datetimepicker1').datetimepicker({
+      format: 'YYYY-MM-DD'
+    });
+  });
+  $(function() {
+    $('#datetimepicker2').datetimepicker({
+      format: 'YYYY-MM-DD'
+    });
+  });
+</script>
+{% endblock %} {% endblock %}

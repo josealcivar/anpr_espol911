@@ -1,0 +1,10 @@
+{% extends 'base.html' %} {% block content %}
+<section class="invoice">
+  <form method="get">
+    {% csrf_token %}
+    <h3>Desea Eliminar Regsitro de: <br> <br> el Vehiculo de placa: <strong> {{ vehiculo.placa }}</strong> Marca: <strong> {{ vehiculo.marca }} </strong>  Modelo: <strong>{{ vehiculo.modelo }} </strong></h3>
+    <button class="btn btn-danger" type="submit">Si, Eliminar de Lista</button>
+    <a class="btn btn-default" href="{% url 'vehiculos_reportados' %}">regresar</a>
+  </form>
+</section>
+{% endblock %}

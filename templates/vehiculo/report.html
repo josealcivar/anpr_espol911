@@ -1,0 +1,98 @@
+{% extends 'base.html' %} {% load static %} {% block content %}
+<section class="invoice">
+  <!-- title row -->
+  <div class="row">
+    <div class="col-xs-12">
+      <h2 class="page-header">
+            <i class="fa fa-globe"></i> Espol911, Inc.
+            <small class="pull-right">Fecha: <strong>{{ fecha_actual }} </strong></small>
+          </h2>
+    </div>
+    <!-- /.col -->
+  </div>
+  <form id="searchDaraVehicle" method="GET">
+    <!-- info row -->
+    <div class="container-fluid">
+
+      <div class="row invoice-info">
+        <div class="col-sm-6 xs-12 invoice-col">
+          <div class="form-group has-feedback">
+            <label for="InputPlates">Caracteristica:</label>
+            <input type="text" name="caracteristica" class="form-control" placeholder="placa, marca o modelo">
+            <span class="glyphicon glyphicon-cars"></span>
+          </div>
+        </div>
+
+        <div class="col-sm-6 xs-12 invoice-col">
+
+          <button type="submit" id="search" class="btn btn-success pull-right" style="margin-right: 5px;">
+              <i class="fa fa-search"></i> Consultar
+            </button>
+
+
+          <!-- /.col -->
+        </div>
+        <!-- /.row -->
+      </div>
+
+    </div>
+  </form>
+  <!-- <h2>{{ mensajes }}</h2> -->
+
+  <div class="row">
+    <div class="col-xs-12 table-responsive">
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Placa</th>
+            <th>Marca</th>
+            <th>Modelo</th>
+            <th>Color</th>
+            <th>Servicio</th>
+            <th>Fecha Reportado</th>
+            <th>Comentario</th>
+            <th>Quitar de Lista</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% if busqueda %} {% for lista in object_list %}
+          <tr>
+            <th>{{ forloop.counter }}</th>
+            <td>{{ lista.vehiculo.placa }}</td>
+            <td>{{ lista.vehiculo.marca }}</td>
+            <td>{{ lista.vehiculo.modelo }}</td>
+            <td>{{ lista.vehiculo.color }}</td>
+            <td>{{ lista.vehiculo.servicio }}</td>
+            <td>{{ lista.fecha }}</td>
+            <td>{{ lista.comentario }}</td>
+
+            <td>
+              <a class="btn btn-danger" href="{% url 'reportar_vehiculo' lista.vehiculo.id %}">Eliminar</a>
+            </td>
+
+            <!-- <td>{{ vehiculo.vehiculo.nombre }} {{vehiculo.vehiculo.apellido}}</td> -->
+
+          </tr>
+          {% endfor %} {% else %}
+          <h1>no hay registros en Lista Negra</h1> {%endif%}
+        </tbody>
+      </table>
+
+      <ul class="pager">
+
+        <li>
+          {% if page_obj.has_previous %}
+          <a class="page-link" href="?page{{ page_obj.previous_page_number }}">Previous</a> {% endif %}</li>
+        <li>
+          {% if page_obj.has_next %}
+          <a class="page-link" href="?page{{page_obj.next_page_number}}">Next</a> {% endif %}</li>
+
+      </ul>
+
+    </div>
+  </div>
+
+
+</section>
+{% endblock %}

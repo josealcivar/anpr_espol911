@@ -1,17 +1,17 @@
 {% extends 'adminlte/lib/_main_sidebar.html' %} {% block nav_links %}
 <li>
-  <a href="/some/url">
+  <a href="{% url 'index' %}">
             <i class="fa fa-dashboard"></i> <span>Home</span>
         </a>
 </li>
 <li>
-  <a href="/some/url">
+  <a href="{% url 'consultar' %}">
             <i class="fa fa-user"></i> <span>Consultas</span>
         </a>
 </li>
 <li>
-  <a href="/some/url">
-            <i class="fa fa-user"></i> <span>Reportes</span>
+  <a href="{% url 'vehiculos_reportados' %}">
+            <i class="fa fa-user"></i> <span>Vehiculos Reportados</span>
         </a>
 </li>
 {% endblock nav_links %}

@@ -1,2 +1,47 @@
-{% extends 'base.html' %} {% block content %}
-<h4>bienvenidos al programa</h4> {% endblock %}
+{% extends 'base.html' %} {% load static %} {% block content %}
+<div class="container">
+  <div class="box">
+    <div class="box-header with-border">
+      <h3 class="box-title"></h3>
+    </div>
+    <div class="box-body">
+      <!-- <div class="chart-container" style="position: relative; height:30vh; width:60vw"> -->
+      <!-- <canvas id="myChart"></canvas> -->
+
+      <canvas id="myChart" style="height: 167px; width: 422px;" width="506" height="200"></canvas>
+      <!-- </div> -->
+    </div>
+  </div>
+</div>
+
+{% block javascript %} {% include 'adminlte/lib/_scripts.html' %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+
+<script>
+  var cars = JSON.parse("{{ carros }}");
+  var datos = "{{ dates_json }}";
+  var fechas = JSON.parse(datos.replace(/&quot;/g, '"')); // al mostrar presenta unos caracteres quot se quita eso para que muestre la cadena
+
+  var myChart = new Chart(document.getElementById("myChart"), {
+    type: 'line',
+    data: {
+      // labels: [1500, 1600, 1700, 1750, 1800, 1850, 1900, 1950, 1999, 2000],
+      // labels: [1500, 1600, 1700, 1750, 1800, 1850, 1900, 1950, 1999, 2000],
+      labels: fechas,
+      datasets: [{
+        // data: [282, 350, 411, 502, 635, 809, 947, 1402, 3700, 5267],
+        data: cars,
+        label: "INGRESO",
+        borderColor: "#45b81d",
+        fill: false
+      }]
+    },
+    options: {
+      title: {
+        display: true,
+        text: 'FLUJO VEHICULAR ULTIMO MES ESPOL'
+      }
+    }
+  });
+</script>
+{% endblock %} {% endblock %}
