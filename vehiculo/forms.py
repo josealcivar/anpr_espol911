@@ -1,101 +1,52 @@
 from django import forms
-from apps.adopcion.models import Persona, Solicitud
+from vehiculo.models import Lista_negra_vehiculos, Vehiculo
 
-class VehiculoForm(forms.ModelForm):
+class ListaNegraForm(forms.ModelForm):
 
     class Meta:
-        model = Vehiulo
+        model = Lista_negra_vehiculos
 
 
         fields = [
-        'propietario',
-        'placa',
-        'fecha',
-        'horacaptura',
-        'camara',
-
+        'comentario',
         ]
         labels = {
-            'nombre'          : 'Nombre',
-            'apellido'        : 'Apellido',
-            'edad'            : 'Edad',
-            'telefono'        : 'Telefono',
-            'email'           : 'Correo Electronico',
-
+            'comentario'          : 'comentario',
+      
         }
 
         widgets = {
-            'propietario'     : forms.TextInput(attrs={'class':'form-control'}),
-            'placa'           : forms.TextInput(attrs={'class':'form-control'}),
-            'fecha'           : forms.TextInput(attrs={'class':'form-control'}),
-            'horacaptura'     : forms.TextInput(attrs={'class':'form-control'}),
-            'camara'          : forms.TextInput(attrs={'class':'form-control'}),
+            'comentario'     : forms.TextInput(attrs={'class':'form-control'}),
 
         }
 
-class SolicitudForm(forms.ModelForm):
+class VehiculoProfile(forms.ModelForm):
+    
     class Meta:
-        model = Solicitud
-
+        model = Vehiculo
 
         fields = [
-        'numero_mascota',
-        'razones',
+            'placa',
+            'marca',
+            'modelo',
+            'anio_vehiculo',
+            'servicio',
+            
         ]
-        labels = {
-            'numero_mascota' : 'Numero de mascotas',
-            'razones'        : 'Razones para adoptar',
+        labels={
+            'placa' : 'Placa:',
+            'marca' : 'Marca:',
+            'modelo': 'Modelo:',
+            'anio_vehiculo' : 'Año:',
+            'servicio' : 'servicio:',
+            
         }
 
         widgets = {
-            'numero_mascota' : forms.TextInput(attrs={'class':'form-control'}),
-            'razones'         : forms.Textarea(attrs={'class':'form-control'}),
-        }
-
-
-
-from django import forms
-from vehiculo.models import Vehiculo, Caracteristica
-
-class SearchForm(forms.Form):
-
-    class Meta:
-        model = Persona
-
-
-        fields = [
-        'nombre',
-        'apellido',
-        'edad',
-        'telefono',
-        'email',
-
-        ]
-        labels = {
-            'nombre'          : 'Nombre',
-            'apellido'        : 'Apellido',
-            'edad'            : 'Edad',
-            'telefono'        : 'Telefono',
-            'email'           : 'Correo Electronico',
+            'placa'         : forms.TextInput(attrs={'class':'form-control'}),
+            'marca'         : forms.TextInput(attrs={'class':'form-control','disabled':'True'}),
+            'modelo'        : forms.TextInput(attrs={'class':'form-control','disabled':'True'}),
+            'anio_vehiculo' : forms.TextInput(attrs={'class':'form-control','disabled':'True'}),
+            'servicio'      : forms.TextInput(attrs={'class':'form-control','disabled':'True'}),
 
         }
-
-        widgets = {
-            'placa'          : forms.TextInput(attrs={'class':'form-control'}),
-            'modelo'         : forms.TextInput(attrs={'class':'form-control'}),
-            'marca'          : forms.TextInput(attrs={'class':'form-control'}),
-            'fecha_desde'    : forms.TextInput(attrs={'class':'form-control'}),
-            'fecha_hasta'    : forms.TextInput(attrs={'class':'form-control'}),
-            'hora_desde'    : forms.TextInput(attrs={'class':'form-control'}),
-            'hora_desde'    : forms.TextInput(attrs={'class':'form-control'}),
-
-        }
-
-
-    placa       = forms.CharField(required=False)
-    modelo      = forms.CharField(required=False)
-    marca       = forms.CharField(required=False)
-    fecha_desde = forms.CharField(required=False)
-    fecha_hasta = forms.CharField(required=False)
-    hora_desde  = forms.CharField(required=False)
-    hora_hasta  = forms.CharField(required=False)

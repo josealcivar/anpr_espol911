@@ -1,0 +1,87 @@
+{% extends 'base.html' %} {% block content %}
+<section class="invoice">
+  <div class="navtabs-custom">
+    <div class="tab-content">
+      <!-- title row -->
+      <div class="row">
+        <div class="col-xs-12">
+          <h2 class="page-header">
+            <i class="fa fa-globe"></i> Espol911, Inc.
+          </h2>
+        </div>
+        <!-- /.col -->
+      </div>
+      <form method="post">
+
+        {% csrf_token %}
+        {% if object %} 
+        <div class="row">
+          <div class="col-md-8 col-md-offset-2">
+              <label for="placa"> Placa</label>
+            <div class="form-group">
+              <!-- <label for="{{ form.placa.name }}"> {{ form.placa.label }}</label> {{ form.placa }} -->
+              <input type="text" name="placa" value="{{ object.placa }}">
+            </div>
+          </div>
+          <div class="col-md-8 col-md-offset-2">
+              <label for="marca"> Marca</label>
+            <div class="form-group">
+              <!-- <label for="{{ form.marca.name }}"> {{ form.marca.label }}</label> {{ form.marca }} -->
+              
+              <input type="text" name="Marca" value="{{ object.marca }}">
+            </div>
+          </div>
+          <div class="col-md-8 col-md-offset-2">
+              <label for="Modelo"> Modelo</label>
+            <div class="form-group">
+              <!-- <label for="{{ form.modelo.name }}"> {{ form.modelo.label }}</label> {{ form.modelo }} -->
+              
+              <input type="text" name="Modelo" value="{{ object.modelo }}">
+            </div>
+          </div>
+          <div class="col-md-8 col-md-offset-2">
+            <label for="placa"> Año Vehiculo</label>
+            <div class="form-group">
+              <!-- <label for="{{ form.anio_vehiculo.name }}"> {{ form.anio_vehiculo.label }}</label> {{ form.anio_vehiculo }} -->
+              
+              <input type="text" name="anio_vehiculo" value="{{ object.anio_vehiculo }}">
+            </div>
+          </div>
+          <div class="col-md-8 col-md-offset-2">
+              <label for="placa"> Servicio</label>
+            <div class="form-group">
+              <!-- <label for="{{ form.servicio.name }}"> {{ form.servicio.label }}</label> {{ form.servicio }} -->
+              <!-- <label for="placa"> Servicio</label> -->
+              <input type="text" name="servicio" value="{{ object.servicio }}">
+            </div>
+          </div>
+          {% if flujo_vehicular %}
+          <div class="col-md-8 col-md-offset-2">
+              <label for="imagen"> Imagen:</label> {{ flujo_vehicular.rutaimagen }}
+            <div class="form-group">
+              <img src="{{ flujo_vehicular.rutaimagen.url }}" alt="">
+            </div>
+          </div>
+          {% else %}
+          <h1>no hay registros de Vehiculos</h1> {%endif%}
+        </div>
+        {%endif%}
+        <!-- this row will not appear when printing -->
+        <div class="row no-print">
+          <div class="col-xs-12 col-md-6">
+
+            <a class="btn btn-default" href="{% url 'consultar' %}">regresar</a>
+            <button class="btn btn-primary" type="submit">Guardar</button>
+
+          </div>
+        </div>
+
+      </form>
+    </div>
+  </div>
+  </div>
+</section>
+{% block javascript %} {% include 'adminlte/lib/_scripts.html' %}
+
+
+{% endblock %} {% endblock %}

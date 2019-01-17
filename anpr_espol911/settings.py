@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 
 import os
 from django.urls import reverse_lazy
-
+from django.contrib.messages import constants as messages
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -26,8 +26,8 @@ SECRET_KEY = '^eef-q!&dveoc&8o+n+obz9!2ac#i#jaz9#&z#pi+f&#)32co#'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+#ALLOWED_HOSTS = ['192.168.70.6']
 ALLOWED_HOSTS = []
-
 
 # Application definition
 
@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'vehiculo',
     'user',
+   
 ]
 
 MIDDLEWARE = [
@@ -87,9 +88,9 @@ DATABASES = {
     # }
     'default': {
             'ENGINE': 'django.db.backends.mysql',
-            'NAME': 'anpr',
+            'NAME': 'anpr_espol911',
             'USER': "root",
-            'PASSWORD': 'root1234',
+            'PASSWORD': 'root',
             'HOST': 'localhost',
             'PORT': '3306',
     }
@@ -129,12 +130,26 @@ USE_L10N = True
 USE_TZ = True
 
 
+MESSAGE_TAGS = {
+    messages.DEBUG: 'alert-info',
+    messages.INFO: 'alert-info',
+    messages.SUCCESS: 'alert-success',
+    messages.WARNING: 'alert-warning',
+    messages.ERROR: 'alert-danger',
+}
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS =(os.path.join(BASE_DIR, 'static'),)
+
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT =os.path.join(BASE_DIR, 'imagenes')
+# MEDIA_ROOT= (os.path.join(BASE_DIR, 'imagenes'),)
+# MEDIA_ROOT =os.path.join(BASE_DIR, 'anpr_espol911/media')
 
 LOGIN_REDIRECT_URL = reverse_lazy('index')
 LOGOUT_REDIRECT_URL = reverse_lazy('login')

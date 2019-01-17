@@ -15,9 +15,10 @@ class Vehiculo(models.Model):
     anio_vehiculo      = models.CharField(max_length=50, null=True)
     servicio           = models.CharField(max_length=50, null=True)
     fecha_caducidad    = models.CharField(max_length=50, null=True)
+    
 
     def __str__(self):
-        return '{} {} {} {} {}'.format(self.placa, self.marca, self.color, self.modelo, self.servicio)
+        return '{} {} {} {} {} {}'.format(self.placa, self.marca, self.color, self.modelo, self.anio_vehiculo, self.servicio)
 
 class Flujo_vehicular(models.Model):
 
@@ -25,14 +26,10 @@ class Flujo_vehicular(models.Model):
     horacaptura     = models.TimeField()
     camara          = models.CharField(max_length=30)
     vehiculo        = models.ForeignKey(Vehiculo, null=True, blank=True, on_delete=models.CASCADE)
+    rutaimagen      = models.ImageField(upload_to='imagenes', blank=True)
     def __str__(self):
         return '{} {} {}'.format(self.fecha, self.horacaptura, self.camara)
 
-
-class Imagen_vehiculo(models.Model):
-    nombre          = models.CharField(max_length=50)
-    tipo            = models.CharField(max_length=50)
-    # tamanio         models.Long()
 
 class Lista_negra_vehiculos(models.Model):
     comentario      = models.CharField(max_length=300)

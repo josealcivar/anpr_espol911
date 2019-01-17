@@ -1,0 +1,9 @@
+{% extends 'base.html' %} {% block content %}
+<form method="post">
+  {% csrf_token %}
+  <h3>Desea eliminar el registro de Lista Negra {{ vehiculo.placa }}</h3>
+
+  <button class="btn btn-danger" type="submit">Si, eliminar</button>
+  <a class="btn btn-default" href="{% url 'vehiculos_reportados' %}">Regresar</a>
+</form>
+{% endblock %}

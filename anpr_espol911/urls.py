@@ -16,8 +16,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.contrib.auth.views import login, logout_then_login, password_reset, password_reset_done, password_reset_confirm, password_reset_complete
+from django.conf import settings
+from django.conf.urls.static import static
 
-
+ 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('login/', include('user.urls')),
@@ -25,4 +27,5 @@ urlpatterns = [
     path('accounts/login/', login, {'template_name': 'user/login.html'}),
     path('logout/', logout_then_login),
 
-]
+]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+

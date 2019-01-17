@@ -1,8 +1,51 @@
 {% extends 'base.html' %} {% load static %} {% block content %}
+<section class="invoice">
+<!-- title row -->
+<div class="row">
+  <div class="col-xs-12">
+    <h2 class="page-header">
+          <i class="fa fa-globe"></i> Espol911, Inc. <strong>Reportes Flujo Vehicular</strong>
+          <small class="pull-right">Fecha: <strong>{{ fecha_actual }} </strong></small>
+        </h2>
+  </div>
+  <!-- /.col -->
+</div>
+<form method="GET">
+<div class="row">
+  <div class="col-xs-12">
+    <h4 class="page-footer">
+        <div class="row">
+          <div class="col-md-4">
+            <div class="input-group date" data-date-format="dd.mm.yyyy">
+              <input  type="text" class="form-control" id="fechadesde" name="datesince" placeholder="dd.mm.yyyy">
+              <div class="input-group-addon" >
+                <span class="glyphicon glyphicon-calendar"></span>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+              <div class="input-group date" data-date-format="dd.mm.yyyy">
+                  <input  type="text" class="form-control" id="fechahasta" name="datefrom" placeholder="dd.mm.yyyy">
+                  <div class="input-group-addon" >
+                    <span class="glyphicon glyphicon-calendar"></span>
+                  </div>
+                </div>
+          </div>    
+          <!-- <input class="form datefrom" type="date" name="fechadesde" id="datefrom">
+          <input type="date" name="fechahasta" id="dateto"> -->
+          <div class="col-md-4">
+             <button class="btn btn-primary pull-center" id="generate" type="submit">Generar</button> 
+          </div>
+      </div>
+    </h4>
+  </div>
+  <!-- /.col -->
+</div>
+</form>
 <div class="container">
   <div class="box">
     <div class="box-header with-border">
-      <h3 class="box-title"></h3>
+      <h3 class="box-title">Desde: <strong>01-Aug-2018</strong>  a <strong>01-Aug-2018</strong></h3>
     </div>
     <div class="box-body">
       <!-- <div class="chart-container" style="position: relative; height:30vh; width:60vw"> -->
@@ -13,34 +56,58 @@
     </div>
   </div>
 </div>
-
+</section>
 {% block javascript %} {% include 'adminlte/lib/_scripts.html' %}
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.13.0/moment.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js">
+</script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
 
-<script>
-  var cars = JSON.parse("{{ carros }}");
-  var datos = "{{ dates_json }}";
-  var fechas = JSON.parse(datos.replace(/&quot;/g, '"')); // al mostrar presenta unos caracteres quot se quita eso para que muestre la cadena
+<script type="text/javascript">
+    $(function() {
+    $('.input-group.date').datetimepicker({
+      format: 'YYYY-MM-DD'
+    });
+   
+  });
+
+  // var cars = JSON.parse("{{ carros }}");
+  // var datos = "{{ dates_json }}";
+  // var fechas = JSON.parse(datos.replace(/&quot;/g, '"')); // al mostrar presenta unos caracteres quot se quita eso para que muestre la cadena
+  $('#generate').click(function() {
+    let valor = $('#timesince').val();
+    
+    //alert(valor);
+  });
 
   var myChart = new Chart(document.getElementById("myChart"), {
     type: 'line',
     data: {
       // labels: [1500, 1600, 1700, 1750, 1800, 1850, 1900, 1950, 1999, 2000],
-      // labels: [1500, 1600, 1700, 1750, 1800, 1850, 1900, 1950, 1999, 2000],
-      labels: fechas,
+      labels: ["6AM", "7AM", "8AM", "9AM", "10AM", "11AM", "12AM", "1PM", "2PM", "3PM", "4PM", "5PM", "6PM"],
+      // labels: fechas,
       datasets: [{
-        // data: [282, 350, 411, 502, 635, 809, 947, 1402, 3700, 5267],
-        data: cars,
+        data: [500, 2000, 600, 1200, 350, 500, 560, 400, 450, 500, 300, 400, 480],
+        // data: cars,
         label: "INGRESO",
         borderColor: "#45b81d",
         fill: false
-      }]
-    },
+      },{
+      data: [500, 800, 600, 1200, 450, 300, 850, 1000, 500, 600, 1300, 1200, 700],
+        // data: cars,
+        label: "SALIDA",
+        borderColor: "#FA5858",
+        fill: false
+       } ]
+    
+    }
+    ,
     options: {
       title: {
         display: true,
-        text: 'FLUJO VEHICULAR ULTIMO MES ESPOL'
+        text: 'FLUJO VEHICULAR ESPOL'
       }
+      
     }
   });
 </script>
