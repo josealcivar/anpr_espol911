@@ -11,6 +11,8 @@ from django.shortcuts import get_object_or_404
 from django.core.serializers.json import DjangoJSONEncoder
 from vehiculo.forms import ListaNegraForm, VehiculoProfile  # formulario de ListaNegra y Actualizarplaca vehiculo
 from django.contrib import messages
+import urllib
+from bs4 import BeautifulSoup
 
 # Create your views here.
 
@@ -65,15 +67,15 @@ class VehiculoChart(ListView):
         print(date_since)
         print(date_from)
         # gte == fecha > 2000-23-14     lte fecha < 2000-12-12
-        a= Flujo_vehicular.objects.filter(fecha__gte=date_since,fecha__lte=date_from).values('fecha').annotate(carros=Count('vehiculo_id'))
+        #a= Flujo_vehicular.objects.filter(fecha__gte=date_since,fecha__lte=date_from).values('fecha').annotate(carros=Count('vehiculo_id'))
         print("holaaa consultas")
-        print(a)
+        #print(a)
         fechas=[]
         flujo_carros=[]
-        for valores in a:
-            fechas.append((valores['fecha']).strftime("%d-%b"))
-            flujo_carros.append(valores['carros'])
-        dates_json = json.dumps(list(fechas), cls=DjangoJSONEncoder) # las fechas pasa en json
+        #for valores in a:
+         #   fechas.append((valores['fecha']).strftime("%d-%b"))
+         #   flujo_carros.append(valores['carros'])
+        #dates_json = json.dumps(list(fechas), cls=DjangoJSONEncoder) # las fechas pasa en json
         print("imprime la consulta")
         print(fechas)
         print(flujo_carros)
@@ -213,9 +215,7 @@ class VehiculoReportadoList(ListView):
 
 # carga la informacion del vehiculo registrado
 class ProfileCar(DetailView):
-# class ProfileCar(TemplateView):
     model = Flujo_vehicular
-    # second_model= Flujo_vehicular
     template_name = 'vehiculo/Perfil_vehiculo.html'
     form_class = VehiculoProfile
     success_url  = reverse_lazy('consultar')
@@ -243,11 +243,46 @@ class ProfileCar(DetailView):
         
         if request.method == 'POST': #para guardar los datos una vez modificados
             placas = request.POST['placa'] # datos de placas que va a editar
+            #carro=Lista_negra_vehiculos.objects.get(vehiculo_id=pk)
             # consulta el objeto a editar.
-            carro=Vehiculo.objects.get(id=pk)
-            carro.placa=placas
-            carro.save() # guarda el vehiculo en la base de datos
+            carro=Vehiculo.objects.values('id','placa','marca','modelo','anio_vehiculo','servicio').filter(placa=placas)
+            print("hola a todos")
+            print(carro)
+            if not carro:
+                array_data=self.consultaPlaca(placas)
+                print(len(array_data))
+                if len(array_data)>1:
+                    car=Vehiculo.objects.create(placa=array_data[0], marca=array_data[1], color=array_data[2],anio_matricula=array_data[3], modelo=array_data[4], clase=array_data[5],fecha_matricula=array_data[6],anio_vehiculo=array_data[7], servicio=array_data[8],fecha_caducidad=array_data[9])
+                    car.save() # guarda el vehiculo en la base de datos
+                    
+                else:
+                    messages.error(request, 'Vehiculo no fue actualizado' , extra_tags='alert')
+                    
+            else:
+                #id_car=carro.id
+                print("hola")
             messages.success(request, 'Vehiculo fue actualizado con placa' , extra_tags='alert')
-            return HttpResponseRedirect(self.success_url)
+            
         else:
             messages.error(request, 'Vehiculo no fue actualizado' , extra_tags='alert')
+        return HttpResponseRedirect(self.success_url)
+    def consultaPlaca(self, placa):
+        data_vehicle=[]
+        data_vehicle.append(placa)
+        
+        try:
+            quote_page = 'http://consultas.atm.gob.ec/PortalWEB/paginas/clientes/clp_grid_citaciones.jsp?ps_tipo_identificacion=PLA&ps_identificacion='+ placa +'&ps_placa='
+            page = urllib.request.urlopen(quote_page)
+            soup = BeautifulSoup(page, 'html.parser')
+            table = soup.find('table',{'cellpadding':"2"})
+            rows = table.find_all('tr')
+            for tr in rows:
+                for wrapper in tr.find_all(lambda tag: tag.name == 'td' and tag.get('class') == ['detalle_formulario'] and tag.get('class') == ['detalle_formulario']):
+                    data_vehicle.append(wrapper.text)
+                    print (wrapper.text)
+
+            print(data_vehicle)
+            return data_vehicle
+        except:
+            print("no hay datos de vehiculo")
+            return data_vehicle
