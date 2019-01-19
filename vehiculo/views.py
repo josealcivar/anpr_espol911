@@ -225,7 +225,10 @@ class ProfileCar(DetailView):
         context = super(ProfileCar, self).get_context_data(**kwargs)
         #obtiene el id del vehiculo registrado
         pk = self.kwargs.get('pk', 0)
-        vehiculo2 = Vehiculo.objects.values('id','placa','marca','modelo','anio_vehiculo','servicio').filter(id=pk)
+        vehiculo = Flujo_vehicular.objects.values('vehiculo_id').filter(id=pk)
+
+        vehiculo2 = Vehiculo.objects.values('id','placa','marca','modelo','anio_vehiculo','servicio').filter(id=vehiculo[0]['vehiculo_id'])
+        
         print(vehiculo2[0]['placa'])
         #guarda en un objeto para mostrarlo en el formulario
         context['object'] = vehiculo2[0]
@@ -250,22 +253,45 @@ class ProfileCar(DetailView):
             print(carro)
             if not carro:
                 array_data=self.consultaPlaca(placas)
-                print(len(array_data))
-                if len(array_data)>1:
+                
+                if len(array_data)>1: # si es < 1 es porque tiene datos de vehiculo
                     car=Vehiculo.objects.create(placa=array_data[0], marca=array_data[1], color=array_data[2],anio_matricula=array_data[3], modelo=array_data[4], clase=array_data[5],fecha_matricula=array_data[6],anio_vehiculo=array_data[7], servicio=array_data[8],fecha_caducidad=array_data[9])
                     car.save() # guarda el vehiculo en la base de datos
+                    car_with_id=Vehiculo.objects.values('id').filter(placa=placas)
+                    print("MUESTRA LOS DATOS DE CARRO")
+                    flujo_car=Flujo_vehicular.objects.get(id=pk)
+                    print(flujo_car)
+                    # proceso de actualizar name ruta imagen con placa
+                    name_ruta_imagen=flujo_car.rutaimagen
+                    print("ruta ant: ", name_ruta_imagen)
+                    temp_image=str(name_ruta_imagen).split('_',1)
+                    new_name=placas+'_'+temp_image[1]
+                    print("ruta new: ", new_name)
+                    flujo_car.rutaimagen=new_name
                     
+                    flujo_car.vehiculo_id=car_with_id[0]['id']
+                    flujo_car.save()
+                    
+                    messages.success(request, 'Vehiculo fue actualizado con placa: ' + placas , extra_tags='alert')
+
                 else:
-                    messages.error(request, 'Vehiculo no fue actualizado' , extra_tags='alert')
+                    messages.error(request, 'NO existe Vehiculo con placa: '+ placas , extra_tags='alert')
                     
             else:
-                #id_car=carro.id
-                print("hola")
-            messages.success(request, 'Vehiculo fue actualizado con placa' , extra_tags='alert')
+                flujo_car=Flujo_vehicular.objects.get(id=pk)
+                # proceso de actualizar name ruta imagen con placa
+                name_ruta_imagen=flujo_car.rutaimagen
+                temp_image=str(name_ruta_imagen).split('_',1)
+                new_name=placas+'_'+temp_image[1]
+                flujo_car.rutaimagen=new_name
+                flujo_car.vehiculo_id=carro[0]['id']
+                flujo_car.save()
+                messages.success(request, 'registro de flujo vehicular fue actualizado con placa: ' + placas , extra_tags='alert')
             
         else:
-            messages.error(request, 'Vehiculo no fue actualizado' , extra_tags='alert')
+            messages.error(request, 'hubo un Error' , extra_tags='alert')
         return HttpResponseRedirect(self.success_url)
+# funcion scrapping para traer datos de vehiculo
     def consultaPlaca(self, placa):
         data_vehicle=[]
         data_vehicle.append(placa)
