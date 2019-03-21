@@ -88,10 +88,10 @@ DATABASES = {
     # }
     'default': {
             'ENGINE': 'django.db.backends.mysql',
-            'NAME': 'anpr_espol911',
-            'USER': "root", 
-            'PASSWORD': 'root',
-            'HOST': 'localhost',
+            'NAME': 'heroku_eeb2cd690834874',
+            'USER': "bd5facea6e05a5", 
+            'PASSWORD': 'd934b2cd',
+            'HOST': 'us-cdbr-iron-east-03.cleardb.net',
             'PORT': '3306',
     }
 }
